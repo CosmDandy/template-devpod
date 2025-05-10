@@ -11,7 +11,7 @@ devpod up . --id . --provider . --dotfiles https://github.com/CosmDandy/dotfiles
 
 ```
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2"": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
 ```
 
