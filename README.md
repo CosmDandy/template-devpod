@@ -1,10 +1,9 @@
 # Шаблон для проектов с DevPod
 
-Этот репозиторий является отправной точкой для всех моих проектов при работе с которыми я использую [DevPod](https://devpod.sh/)
+Этот репозиторий является отправной точкой для проектов при работе с которыми я использую [DevPod](https://devpod.sh/)
 
-Для создания проекта в DevPod я использую следующую команду:
 ```bash
-devpod up . --id . --provider . --dotfiles https://github.com/CosmDandy/dotfiles-devpod.git
+devpod up git@github.com:CosmDandy/template-devpod.git --id template-devpod-[...] --provider [...]
 ```
 
 ## [Docker in docker](https://github.com/devcontainers/features/tree/main/src/docker-in-docker)
