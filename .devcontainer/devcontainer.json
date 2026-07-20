@@ -1,21 +1,40 @@
 {
+  // Пребилт-образ из CosmDandy/dotfiles: Ubuntu + Nix + home-manager, внутри уже
+  // лежат плагины nvim, mason-пакеты и treesitter-парсеры. Поэтому здесь нет ни
+  // onCreateCommand, ни setup.sh — установка занимает ~20с вместо минут.
+  //
+  // Профили: :core   — редактор, шелл, git, CI-утилиты.
+  //          :devops — то же плюс terraform, ansible, kubectl, helm, k9s, go.
+  // devops собран поверх core, слои общие: имея один образ, второй дотягивается
+  // дельтой. Меняй тег ниже под задачу репозитория.
+  //
+  // Разовая проверка без правки файла: devpod up . --devcontainer-image <тег>
   "name": "Template DevContainer",
   "image": "ghcr.io/cosmdandy/devcontainer:core",
-  "remoteEnv": {
+
+  // containerEnv против remoteEnv: первый задаёт переменные всему контейнеру,
+  // второй — только процессам, которые запускает инструмент. Локаль и таймзона
+  // нужны и фоновым демонам, и `docker exec`, поэтому им место в containerEnv.
+  // TERM/COLORTERM — свойство конкретной терминальной сессии, их место ниже.
+  "containerEnv": {
     "LANG": "en_US.UTF-8",
     "LC_ALL": "en_US.UTF-8",
-    "TERM": "xterm-256color",
-    "COLORTERM": "truecolor",
     "TZ": "Europe/Moscow"
   },
+  "remoteEnv": {
+    "TERM": "xterm-256color",
+    "COLORTERM": "truecolor"
+  },
+
+  // Настройки редактора живут строго под customizations.vscode: верхнеуровневый
+  // "settings" — устаревшее место из ранних версий спецификации, современные
+  // реализации его молча игнорируют.
   "customizations": {
     "vscode": {
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.profiles.linux": {
-          "zsh": {
-            "path": "/usr/bin/zsh"
-          }
+          "zsh": { "path": "/usr/bin/zsh" }
         }
       }
     }
