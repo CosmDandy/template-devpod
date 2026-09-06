@@ -293,6 +293,11 @@ secrets.yml
 credentials.yml
 !credentials.example.yml
 
+*.decrypted
+*.decrypted.*
+
+.direnv/
+
 # ============================================================================
 # Build & Dependencies
 # ============================================================================

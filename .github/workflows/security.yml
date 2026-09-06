@@ -34,6 +34,35 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  encrypted:
+    name: sops-файлы зашифрованы
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Расшифрованный sops-файл — обычный YAML, и gitleaks его не ловит: токен
+      # Proxmox или пароль сервиса не подходят под известные паттерны. Признак
+      # зашифрованного файла — служебный блок `sops:` с метаданными.
+      #
+      # Это ДУБЛЬ локального pre-commit из dotfiles, и дубль намеренный: хук
+      # стоит только на моих машинах (core.hooksPath), а .envrc и секреты
+      # уезжают в общий репозиторий. Гейт ничего не предотвращает — к моменту
+      # его срабатывания коммит уже на сервере, и секрет надо считать
+      # скомпрометированным и ротировать. Его работа — не дать этому пройти
+      # незамеченным и не пустить в основную ветку.
+      - name: каждый *.sops.* должен быть зашифрован
+        run: |
+          status=0
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            grep -q '^sops:' "$f" || { echo "::error file=$f::plaintext — файл не зашифрован (sops -e -i)"; status=1; }
+          done < <(git ls-files '*.sops.yaml' '*.sops.yml' '*.sops.json' \
+            | grep -vE '(^|/)\.sops\.(yaml|yml)$' || true)   # сам конфиг не шифруется
+          exit $status
+
   iac:
     name: iac (trivy)
     runs-on: ubuntu-latest
