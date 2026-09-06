@@ -1,5 +1,7 @@
 # Шаблон для проектов с DevPod
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CosmDandy/template-devpod)
+
 Этот репозиторий является отправной точкой для проектов при работе с которыми я использую [DevPod](https://devpod.sh/)
 
 ```bash
