@@ -1,6 +1,8 @@
 # Шаблон для проектов с DevPod
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CosmDandy/template-devpod)
+[![Edit in github.dev](https://img.shields.io/badge/edit-github.dev-1f6feb?logo=github)](https://github.dev/CosmDandy/template-devpod)
+[![license](https://img.shields.io/github/license/CosmDandy/template-devpod)](LICENSE)
 
 Этот репозиторий является отправной точкой для проектов при работе с которыми я использую [DevPod](https://devpod.sh/)
 
